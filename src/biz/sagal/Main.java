@@ -8,7 +8,7 @@ import javafx.fxml.FXMLLoader;
 
 /**
  * @author Mark Sagal <mark@sagal.biz>
- * @since  2018-14-06
+ * @since  2018-06-14
  */
 public class Main extends Application {
 	@Override
@@ -18,7 +18,7 @@ public class Main extends Application {
 			final Scene scene = new Scene(root, 380, 380);
 			scene.getStylesheets().add(this.getClass().getResource("application.css").toExternalForm());
 			stage.setScene(scene);
-			stage.setTitle("Business Time Calculator");
+			stage.setTitle("Time Span Calculator");
 			stage.setResizable(false);
 			stage.show();
 		} catch (final Exception e) {

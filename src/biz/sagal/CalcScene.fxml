@@ -19,6 +19,7 @@
                 <TableColumn id="delCol" fx:id="delCol" editable="false" prefWidth="66.0" resizable="false" sortable="false" text="" />
               </columns>
             </TableView>
+            <Button defaultButton="true" layoutX="291.0" layoutY="337.0" mnemonicParsing="false" onAction="#onSumBtnAction" prefHeight="31.0" prefWidth="74.0" text="SUM" />
          </children></Pane>
    </center>
 </BorderPane>

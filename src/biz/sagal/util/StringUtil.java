@@ -20,6 +20,26 @@ public interface StringUtil {
 	}
 
 	/**
+	 * Formats Array of String
+	 * @param  strings Raw string
+	 * @return Formatted Array of Strings
+	 */
+	public static String[] formatStringArray(final String[] strings) {
+		final int stringsLen = strings.length;
+		final String[] formattedStrings = new String[stringsLen];
+		for (int i = 0; i < stringsLen; i++) {
+			final String[] stringSpaces = strings[i].replaceAll("\\t", " ").split("\\s+");
+			final int stringSpacesLen = stringSpaces.length;
+			final String[] trimedSpaces = new String[stringSpacesLen];
+			for (int ii = 0; ii < stringSpacesLen; ii++) {
+				trimedSpaces[ii] = stringSpaces[ii].trim();
+			}
+			formattedStrings[i] = String.join(" ", trimedSpaces);
+		}
+		return formattedStrings;
+	}
+
+	/**
 	 * Remove spaces from string
 	 * @param  searchString Raw string
 	 * @return              Returns string without spaces

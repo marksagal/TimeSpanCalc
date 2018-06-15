@@ -8,7 +8,7 @@ import javafx.beans.property.StringProperty;
  * @author Mark Sagal <mark@sagal.biz>
  * @since  2018-06-14
  */
-public class TimeModel {
+public class TimeModel implements TimeModelInterface {
 	/**
 	 * Time datas
 	 */
@@ -23,9 +23,19 @@ public class TimeModel {
 	}
 
 	/**
+	 * Time data getter
+	 * @return Returns time data in string
+	 */
+	@Override
+	public String getTime() {
+		return this.timeDatas;
+	}
+
+	/**
 	 * time datas getter
 	 * @return Returns StringProperty time datas
 	 */
+	@Override
 	public StringProperty getTimeDatas() {
 		return new SimpleStringProperty(this.timeDatas);
 	}
