@@ -8,6 +8,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
 <BorderPane xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="biz.sagal.CalcSceneController">
    <center>
@@ -15,7 +16,7 @@
          <children>
             <Button defaultButton="true" layoutX="297.0" layoutY="14.0" mnemonicParsing="false" onAction="#onAddBtnAction" prefHeight="60.0" prefWidth="69.0" text="Add" />
             <TextArea id="timeInput" fx:id="timeInput" layoutX="14.0" layoutY="14.0" pickOnBounds="false" prefHeight="60.0" prefWidth="270.0" />
-            <TableView id="timeTable" fx:id="timeTable" layoutX="14.0" layoutY="156.0" prefHeight="170.0" prefWidth="350.0">
+            <TableView id="timeTable" fx:id="timeTable" layoutX="14.0" layoutY="156.0" prefHeight="160.0" prefWidth="350.0">
               <columns>
                 <TableColumn id="timeCol" fx:id="timeCol" editable="false" prefWidth="269.0" resizable="false" text="Time Table" />
                 <TableColumn id="delCol" fx:id="delCol" editable="false" prefWidth="66.0" resizable="false" sortable="false" text="" />
@@ -26,6 +27,11 @@
             <TextField id="maxHoursInput" fx:id="maxHoursInput" alignment="CENTER" layoutX="14.0" layoutY="119.0" prefHeight="25.0" prefWidth="30.0" promptText="#" text="8" />
             <Label layoutX="51.0" layoutY="123.0" text="Hour(s) a day" />
             <Label layoutX="50.0" layoutY="90.0" text="Day(s) a week" />
+            <TextField id="sumField" fx:id="sumField" alignment="CENTER" editable="false" layoutX="14.0" layoutY="338.0" prefHeight="29.0" prefWidth="186.0" visible="false">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></TextField>
+            <Label id="sumLabel" fx:id="sumLabel" layoutX="15.0" layoutY="319.0" text="Summary" visible="false" />
          </children></Pane>
    </center>
 </BorderPane>

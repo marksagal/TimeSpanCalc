@@ -9,6 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -56,6 +57,16 @@ public class Calculator {
 	 * Reference of TextField#maxHoursInput
 	 */
 	private TextField maxHoursInput;
+
+	/**
+	 * Reference of TextField#sumField
+	 */
+	private TextField sumField;
+
+	/**
+	 * Reference of Label#sumLabel
+	 */
+	private Label sumLabel;
 
 	/**
 	 * Collection setter
@@ -115,6 +126,22 @@ public class Calculator {
 	}
 
 	/**
+	 * Sum field setter
+	 * @param sumField Reference of TextField#sumField
+	 */
+	public void setSumField(final TextField sumField) {
+		this.sumField = sumField;
+	}
+
+	/**
+	 * Sum label setter
+	 * @param sumLabel Reference of Label#sumLabel
+	 */
+	public void setSumLabel(final Label sumLabel) {
+		this.sumLabel = sumLabel;
+	}
+
+	/**
 	 * Time input default prompt setter
 	 * @param defaultMsg String placeholder
 	 */
@@ -128,6 +155,7 @@ public class Calculator {
 	 */
 	public void setDeleteButton(final String btnName) {
 		final ObservableList<TimeModelInterface> collection = this.collection;
+		final Calculator calc = this;
 		this.delCol.setCellValueFactory(cell -> new ReadOnlyObjectWrapper<>(cell.getValue()));
 		this.delCol.setCellFactory(cell -> new TableCell<TimeModelInterface, TimeModelInterface>() {
 			private final Button delBtn = new Button(btnName);
@@ -139,7 +167,10 @@ public class Calculator {
 					return;
 				}
 				this.setGraphic(this.delBtn);
-				this.delBtn.setOnAction(event -> collection.remove(data));
+				this.delBtn.setOnAction(event -> {
+					calc.clearSummary();
+					collection.remove(data);
+				});
 			}
 		});
 	}
@@ -165,6 +196,7 @@ public class Calculator {
 	 * @param event Reference of Event
 	 */
 	public void handleAddBtnAction(final ActionEvent event) {
+		this.clearSummary();
 		final String[] rawStringDatas = StringUtil.getLines(this.timeInput.getText());
 		final String[] stringDatas = StringUtil.formatStringArray(rawStringDatas);
 		try {
@@ -253,6 +285,7 @@ public class Calculator {
 	 * @param event Reference of Event
 	 */
 	public void handleSumBtnAction(final ActionEvent event) {
+		this.clearSummary();
 		try {
 			this.checkTimeMarginInput();
 		} catch (Exception e) {
@@ -262,9 +295,6 @@ public class Calculator {
 		if (this.collection.isEmpty()) {
 			this.alert("Warning!", "Warning!", "No content in table!", AlertType.WARNING);
 			return;
-		}
-		for (TimeModelInterface t: this.collection) {
-			System.out.println(t.getTime());
 		}
 		final HashMap<String, Integer> collectionSum = this.getCollectionSum();
 		final int weeks = collectionSum.get("w");
@@ -276,7 +306,7 @@ public class Calculator {
 		final TimeMutation mutate = new TimeMutation(weeks, days, hours, minutes);
 		mutate.setMargin(maxDays, maxHours);
 		final int[] mutatedTimeSpan = mutate.getMutatedTime();
-		System.out.println(String.format("Weeks: %d, Days: %d, Hours: %d, Minutes: %d", mutatedTimeSpan[0], mutatedTimeSpan[1], mutatedTimeSpan[2], mutatedTimeSpan[3]));
+		this.showSummary(this.parseSummary(mutatedTimeSpan));
 	}
 
 	/**
@@ -302,5 +332,50 @@ public class Calculator {
 			}
 		}
 		return collectionSum;
+	}
+
+	/**
+	 * Parses summary
+	 * @param timeSpans Array of ints {weeks, days, hours, minutes}
+	 * @return Parsed summary
+	 */
+	private String parseSummary(final int[] timeSpans) {
+		final int weeks = timeSpans[0];
+		final int days = timeSpans[1];
+		final int hours = timeSpans[2];
+		final int minutes = timeSpans[3];
+		String parsedSummary = "";
+		if (weeks != 0) {
+			parsedSummary += String.format("%dw ", weeks);
+		}
+		if (days != 0) {
+			parsedSummary += String.format("%dd ", days);
+		}
+		if (hours != 0) {
+			parsedSummary += String.format("%dh ", hours);
+		}
+		if (minutes != 0) {
+			parsedSummary += String.format("%dm ", minutes);
+		}
+		return parsedSummary.trim();
+	}
+
+	/**
+	 * Clears and hide summary
+	 */
+	private void clearSummary() {
+		this.sumField.setVisible(false);
+		this.sumLabel.setVisible(false);
+		this.sumField.clear();
+	}
+
+	/**
+	 * Shows summary
+	 * @param summary Text summary
+	 */
+	private void showSummary(final String summary) {
+		this.sumField.setText(summary);
+		this.sumField.setVisible(true);
+		this.sumLabel.setVisible(true);
 	}
 }

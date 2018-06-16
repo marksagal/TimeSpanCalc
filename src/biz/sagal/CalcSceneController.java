@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 import biz.sagal.calc.Calculator;
@@ -56,6 +57,18 @@ public class CalcSceneController implements Initializable {
 	private TextField maxHoursInput;
 
 	/**
+	 * Reference of TextField#sumField
+	 */
+	@FXML
+	private TextField sumField;
+
+	/**
+	 * Reference of Label#sumLabel
+	 */
+	@FXML
+	private Label sumLabel;
+
+	/**
 	 * Reference of Calculator
 	 */
 	private Calculator calc;
@@ -73,6 +86,8 @@ public class CalcSceneController implements Initializable {
 		this.calc.setTimeInput(this.timeInput);
 		this.calc.setMaxDaysInput(this.maxDaysInput);
 		this.calc.setMaxHoursInput(this.maxHoursInput);
+		this.calc.setSumField(this.sumField);
+		this.calc.setSumLabel(this.sumLabel);
 		this.calc.setTimeInputDefaultPrompt("Example:%n2w 3d 1h 28m%n3w 2d");
 		this.calc.setDeleteButton("Remove");
 	}
