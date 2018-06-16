@@ -13,6 +13,7 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import biz.sagal.util.StringUtil;
 
 /**
@@ -45,6 +46,16 @@ public class Calculator {
 	 * Reference of TextArea#timeInput
 	 */
 	private TextArea timeInput;
+
+	/**
+	 * Reference of TextField#maxDaysInput
+	 */
+	private TextField maxDaysInput;
+
+	/**
+	 * Reference of TextField#maxHoursInput
+	 */
+	private TextField maxHoursInput;
 
 	/**
 	 * Collection setter
@@ -85,6 +96,22 @@ public class Calculator {
 	 */
 	public void setTimeInput(final TextArea timeInput) {
 		this.timeInput = timeInput;
+	}
+
+	/**
+	 * Max days input setter
+	 * @param maxDaysInput Reference of TextField#maxDaysInput
+	 */
+	public void setMaxDaysInput(final TextField maxDaysInput) {
+		this.maxDaysInput = maxDaysInput;
+	}
+
+	/**
+	 * Max hours input setter
+	 * @param maxHoursInput Reference of TextField#maxHoursInput
+	 */
+	public void setMaxHoursInput(final TextField maxHoursInput) {
+		this.maxHoursInput = maxHoursInput;
 	}
 
 	/**
@@ -192,10 +219,46 @@ public class Calculator {
 	}
 
 	/**
+	 * Checks time margin input throws exception on failure
+	 * @throws Exception
+	 */
+	private void checkTimeMarginInput() throws Exception {
+		final String maxDaysInputText = this.maxDaysInput.getText();
+		final String maxHoursInputText = this.maxHoursInput.getText();
+		String errMsg = "";
+		// Checks Day(s) a week field
+		if (maxDaysInputText.length() == 0) {
+			errMsg += "Day(s) a week is a required field%n";
+		} else if (maxDaysInputText.matches("^\\d{1,}$") == false) {
+			errMsg += "Day(s) a week should be a number%n";
+		} else if (Integer.parseInt(maxDaysInputText) <= 0) {
+			errMsg += "Day(s) a week cannot be lessthan or equal to zero%n";
+		}
+		// Checks Hour(s) a day field
+		if (maxHoursInputText.length() == 0) {
+			errMsg += "Hour(s) a day is a required field%n";
+		} else if (maxHoursInputText.matches("^\\d{1,}$") == false) {
+			errMsg += "Hours(s) a day should be a number%n";
+		} else if (Integer.parseInt(maxHoursInputText) <= 0) {
+			errMsg += "Hours(s) a day cannot be lessthan or equal to zero%n";
+		}
+		// Checks error message
+		if (errMsg.length() != 0) {
+			throw new Exception(String.format(errMsg));
+		}
+	}
+
+	/**
 	 * Sum button action handler
 	 * @param event Reference of Event
 	 */
 	public void handleSumBtnAction(final ActionEvent event) {
+		try {
+			this.checkTimeMarginInput();
+		} catch (Exception e) {
+			this.alert("Invalid Input", "Please correct the following field(s)", e.getMessage(), AlertType.ERROR);
+			return;
+		}
 		if (this.collection.isEmpty()) {
 			this.alert("Warning!", "Warning!", "No content in table!", AlertType.WARNING);
 			return;
@@ -208,7 +271,12 @@ public class Calculator {
 		final int days = collectionSum.get("d");
 		final int hours = collectionSum.get("h");
 		final int minutes = collectionSum.get("m");
-		System.out.println(String.format("Weeks: %d, Days: %d, Hours: %d, Minutes: %d", weeks, days, hours, minutes));
+		final int maxDays = Integer.parseInt(this.maxDaysInput.getText());
+		final int maxHours = Integer.parseInt(this.maxHoursInput.getText());
+		final TimeMutation mutate = new TimeMutation(weeks, days, hours, minutes);
+		mutate.setMargin(maxDays, maxHours);
+		final int[] mutatedTimeSpan = mutate.getMutatedTime();
+		System.out.println(String.format("Weeks: %d, Days: %d, Hours: %d, Minutes: %d", mutatedTimeSpan[0], mutatedTimeSpan[1], mutatedTimeSpan[2], mutatedTimeSpan[3]));
 	}
 
 	/**

@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TextField;
 import biz.sagal.calc.Calculator;
 import biz.sagal.calc.TimeModelInterface;
 
@@ -43,6 +44,18 @@ public class CalcSceneController implements Initializable {
 	private TextArea timeInput;
 
 	/**
+	 * Reference of TextField#maxDaysInput
+	 */
+	@FXML
+	private TextField maxDaysInput;
+
+	/**
+	 * Reference of TextField#maxHoursInput
+	 */
+	@FXML
+	private TextField maxHoursInput;
+
+	/**
 	 * Reference of Calculator
 	 */
 	private Calculator calc;
@@ -58,6 +71,8 @@ public class CalcSceneController implements Initializable {
 		this.calc.setTimeColumn(this.timeCol);
 		this.calc.setDeleteColumn(this.delCol);
 		this.calc.setTimeInput(this.timeInput);
+		this.calc.setMaxDaysInput(this.maxDaysInput);
+		this.calc.setMaxHoursInput(this.maxHoursInput);
 		this.calc.setTimeInputDefaultPrompt("Example:%n2w 3d 1h 28m%n3w 2d");
 		this.calc.setDeleteButton("Remove");
 	}
