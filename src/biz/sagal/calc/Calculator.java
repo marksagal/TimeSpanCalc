@@ -310,6 +310,16 @@ public class Calculator {
 	}
 
 	/**
+	 * Clear button action handler
+	 * @param event Reference of Event
+	 */
+	public void handleClearBtnAction(final ActionEvent event) {
+		this.timeInput.clear();
+		this.collection.clear();
+		this.clearSummary();
+	}
+
+	/**
 	 * Gets collection sum
 	 * @return Returns Annotation, Sum
 	 */

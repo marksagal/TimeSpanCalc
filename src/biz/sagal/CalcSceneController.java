@@ -109,4 +109,13 @@ public class CalcSceneController implements Initializable {
 	private void onSumBtnAction(final ActionEvent event) {
 		this.calc.handleSumBtnAction(event);
 	}
+
+	/**
+	 * Clear button action listener
+	 * @param event Reference of Event
+	 */
+	@FXML
+	private void onClearBtnAction(final ActionEvent event) {
+		this.calc.handleClearBtnAction(event);
+	}
 }

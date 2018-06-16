@@ -32,6 +32,7 @@
                   <Font name="System Bold" size="12.0" />
                </font></TextField>
             <Label id="sumLabel" fx:id="sumLabel" layoutX="15.0" layoutY="319.0" text="Summary" visible="false" />
+            <Button layoutX="206.0" layoutY="337.0" mnemonicParsing="false" onAction="#onClearBtnAction" prefHeight="31.0" prefWidth="74.0" text="CLEAR" textFill="RED" />
          </children></Pane>
    </center>
 </BorderPane>
