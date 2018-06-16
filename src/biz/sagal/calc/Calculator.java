@@ -203,5 +203,36 @@ public class Calculator {
 		for (TimeModelInterface t: this.collection) {
 			System.out.println(t.getTime());
 		}
+		final HashMap<String, Integer> collectionSum = this.getCollectionSum();
+		final int weeks = collectionSum.get("w");
+		final int days = collectionSum.get("d");
+		final int hours = collectionSum.get("h");
+		final int minutes = collectionSum.get("m");
+		System.out.println(String.format("Weeks: %d, Days: %d, Hours: %d, Minutes: %d", weeks, days, hours, minutes));
+	}
+
+	/**
+	 * Gets collection sum
+	 * @return Returns Annotation, Sum
+	 */
+	private HashMap<String, Integer> getCollectionSum() {
+		final HashMap<String, Integer> collectionSum = new HashMap<>();
+		final String[] annotations = {"w", "d", "h", "m"};
+		for (final String annotation: annotations) {
+			collectionSum.put(annotation, 0);
+		}
+		for (final TimeModelInterface collection: this.collection) {
+			final String timeSpans = collection.getTime();
+			for (String timeSpan: timeSpans.split(" ")) {
+				for (final String annotation: annotations) {
+					if (timeSpan.contains(annotation)) {
+						final int timeValue = Integer.parseInt(timeSpan.replace(annotation, ""));
+						final int currentValue = collectionSum.get(annotation);
+						collectionSum.put(annotation, currentValue + timeValue);
+					}
+				}
+			}
+		}
+		return collectionSum;
 	}
 }
