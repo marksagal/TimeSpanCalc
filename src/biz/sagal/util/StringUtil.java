@@ -34,7 +34,7 @@ public interface StringUtil {
 			for (int ii = 0; ii < stringSpacesLen; ii++) {
 				trimedSpaces[ii] = stringSpaces[ii].trim();
 			}
-			formattedStrings[i] = String.join(" ", trimedSpaces);
+			formattedStrings[i] = String.join(" ", trimedSpaces).toLowerCase();
 		}
 		return formattedStrings;
 	}
