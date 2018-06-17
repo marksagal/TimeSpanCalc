@@ -3,6 +3,7 @@ package biz.sagal;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.fxml.FXMLLoader;
 
@@ -19,6 +20,7 @@ public class Main extends Application {
 			scene.getStylesheets().add(this.getClass().getResource("application.css").toExternalForm());
 			stage.setScene(scene);
 			stage.setTitle("Time Span Calculator");
+			stage.getIcons().add(new Image(this.getClass().getResourceAsStream("resources/images/calc.png")));
 			stage.setResizable(false);
 			stage.show();
 		} catch (final Exception e) {
