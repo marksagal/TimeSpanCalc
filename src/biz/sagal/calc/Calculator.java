@@ -69,6 +69,26 @@ public class Calculator {
 	private Label sumLabel;
 
 	/**
+	 * Weeks int[] index
+	 */
+	private final int WEEKS = 0;
+
+	/**
+	 * Days int[] index
+	 */
+	private final int DAYS = 1;
+
+	/**
+	 * Hours int[] index
+	 */
+	private final int HOURS = 2;
+
+	/**
+	 * Minutes int[] index
+	 */
+	private final int MINUTES = 3;
+
+	/**
 	 * Collection setter
 	 * @param collection Reference of ObservableList
 	 */
@@ -115,6 +135,7 @@ public class Calculator {
 	 */
 	public void setMaxDaysInput(final TextField maxDaysInput) {
 		this.maxDaysInput = maxDaysInput;
+		this.maxDaysInput.textProperty().addListener((obs, oldVal, newVal) -> this.clearSummary());
 	}
 
 	/**
@@ -123,6 +144,7 @@ public class Calculator {
 	 */
 	public void setMaxHoursInput(final TextField maxHoursInput) {
 		this.maxHoursInput = maxHoursInput;
+		this.maxHoursInput.textProperty().addListener((obs, oldVal, newVal) -> this.clearSummary());
 	}
 
 	/**
@@ -306,7 +328,40 @@ public class Calculator {
 		final TimeMutation mutate = new TimeMutation(weeks, days, hours, minutes);
 		mutate.setMargin(maxDays, maxHours);
 		final int[] mutatedTimeSpan = mutate.getMutatedTime();
+		final int[] sumByDays = this.getSumByDays(mutatedTimeSpan, maxDays);
+		final int[] sumByHours = this.getSumByHours(mutatedTimeSpan, maxDays, maxHours);
+		System.out.println(this.parseSummary(sumByDays));
+		System.out.println(this.parseSummary(sumByHours));
 		this.showSummary(this.parseSummary(mutatedTimeSpan));
+	}
+
+	/**
+	 * Gets summary by hours
+	 * @param mutatedTimeSpan Raw Array of ints {weeks, days, hours, minutes}
+	 * @param maxDays         Day margin
+	 * @param maxHours        Hour margin
+	 * @return Sum by hours Array of ints {weeks, days, hours, minutes}
+	 */
+	private int[] getSumByHours(final int[] mutatedTimeSpan, final int maxDays, final int maxHours) {
+		int[] result = mutatedTimeSpan.clone();
+		result[DAYS] += result[WEEKS] * maxDays;
+		result[WEEKS] = 0;
+		result[HOURS] += result[DAYS] * maxHours;
+		result[DAYS] = 0;
+		return result;
+	}
+
+	/**
+	 * Gets summary by days
+	 * @param mutatedTimeSpan Raw Array of ints {weeks, days, hours, minutes}
+	 * @param maxDays         Day margin
+	 * @return Sum by days Array of ints {weeks, days, hours, minutes}
+	 */
+	private int[] getSumByDays(final int[] mutatedTimeSpan, final int maxDays) {
+		int[] result = mutatedTimeSpan.clone();
+		result[DAYS] += result[WEEKS] * maxDays;
+		result[WEEKS] = 0;
+		return result;
 	}
 
 	/**
@@ -350,10 +405,10 @@ public class Calculator {
 	 * @return Parsed summary
 	 */
 	private String parseSummary(final int[] timeSpans) {
-		final int weeks = timeSpans[0];
-		final int days = timeSpans[1];
-		final int hours = timeSpans[2];
-		final int minutes = timeSpans[3];
+		final int weeks = timeSpans[WEEKS];
+		final int days = timeSpans[DAYS];
+		final int hours = timeSpans[HOURS];
+		final int minutes = timeSpans[MINUTES];
 		String parsedSummary = "";
 		if (weeks != 0) {
 			parsedSummary += String.format("%dw ", weeks);
