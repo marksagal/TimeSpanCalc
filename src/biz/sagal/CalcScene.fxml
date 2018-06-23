@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
@@ -11,8 +12,8 @@
 <?import javafx.scene.text.Font?>
 
 <BorderPane xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="biz.sagal.CalcSceneController">
-   <center>
-      <Pane id="textArea" prefHeight="380.0" prefWidth="380.0" BorderPane.alignment="CENTER">
+   <bottom>
+      <Pane id="textArea" prefHeight="408.0" prefWidth="380.0" BorderPane.alignment="CENTER">
          <children>
             <Button defaultButton="true" layoutX="297.0" layoutY="14.0" mnemonicParsing="false" onAction="#onAddBtnAction" prefHeight="60.0" prefWidth="69.0" text="Add" />
             <TextArea id="timeInput" fx:id="timeInput" layoutX="14.0" layoutY="14.0" pickOnBounds="false" prefHeight="60.0" prefWidth="270.0" />
@@ -22,17 +23,35 @@
                 <TableColumn id="delCol" fx:id="delCol" editable="false" prefWidth="66.0" resizable="false" sortable="false" text="" />
               </columns>
             </TableView>
-            <Button defaultButton="true" layoutX="291.0" layoutY="337.0" mnemonicParsing="false" onAction="#onSumBtnAction" prefHeight="31.0" prefWidth="74.0" text="SUM" />
+            <Button defaultButton="true" layoutX="291.0" layoutY="357.0" mnemonicParsing="false" onAction="#onSumBtnAction" prefHeight="31.0" prefWidth="74.0" text="SUM" />
             <TextField id="maxDaysInput" fx:id="maxDaysInput" alignment="CENTER" layoutX="14.0" layoutY="86.0" prefHeight="25.0" prefWidth="30.0" promptText="#" text="5" />
             <TextField id="maxHoursInput" fx:id="maxHoursInput" alignment="CENTER" layoutX="14.0" layoutY="119.0" prefHeight="25.0" prefWidth="30.0" promptText="#" text="8" />
             <Label layoutX="51.0" layoutY="123.0" text="Hour(s) a day" />
             <Label layoutX="50.0" layoutY="90.0" text="Day(s) a week" />
-            <TextField id="sumField" fx:id="sumField" alignment="CENTER" editable="false" layoutX="14.0" layoutY="338.0" prefHeight="29.0" prefWidth="186.0" visible="false">
+            <TextField id="sumField" fx:id="sumField" alignment="CENTER" editable="false" layoutX="14.0" layoutY="358.0" prefHeight="29.0" prefWidth="186.0" visible="false">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font></TextField>
-            <Label id="sumLabel" fx:id="sumLabel" layoutX="15.0" layoutY="319.0" text="Summary" visible="false" />
-            <Button layoutX="206.0" layoutY="337.0" mnemonicParsing="false" onAction="#onClearBtnAction" prefHeight="31.0" prefWidth="74.0" text="CLEAR" textFill="RED" />
+            <Label id="sumLabel" fx:id="sumLabel" layoutX="15.0" layoutY="328.0" text="Summary of" visible="false">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
+            <Button layoutX="206.0" layoutY="357.0" mnemonicParsing="false" onAction="#onClearBtnAction" prefHeight="31.0" prefWidth="74.0" text="CLEAR" textFill="RED" />
+            <RadioButton id="weeksRadio" fx:id="weeksRadio" layoutX="96.0" layoutY="328.0" mnemonicParsing="false" onAction="#onSumRadioAction" text="Weeks" visible="false">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </RadioButton>
+            <RadioButton id="daysRadio" fx:id="daysRadio" layoutX="172.0" layoutY="328.0" mnemonicParsing="false" onAction="#onSumRadioAction" text="Days" visible="false">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </RadioButton>
+            <RadioButton id="hoursRadio" fx:id="hoursRadio" layoutX="239.0" layoutY="328.0" mnemonicParsing="false" onAction="#onSumRadioAction" text="Hours" visible="false">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </RadioButton>
          </children></Pane>
-   </center>
+   </bottom>
 </BorderPane>

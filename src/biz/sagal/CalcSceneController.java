@@ -9,8 +9,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import biz.sagal.calc.Calculator;
 import biz.sagal.calc.TimeModelInterface;
 
@@ -69,6 +71,29 @@ public class CalcSceneController implements Initializable {
 	private Label sumLabel;
 
 	/**
+	 * Reference of RadioButton#weeksRadio
+	 */
+	@FXML
+	private RadioButton weeksRadio;
+
+	/**
+	 * Reference of RadioButton#daysRadio
+	 */
+	@FXML
+	private RadioButton daysRadio;
+
+	/**
+	 * Reference of RadioButton#hoursRadio
+	 */
+	@FXML
+	private RadioButton hoursRadio;
+
+	/**
+	 * Reference of ToggleGroup<SumRadio>
+	 */
+	private ToggleGroup sumRadioGroup;
+
+	/**
 	 * Reference of Calculator
 	 */
 	private Calculator calc;
@@ -90,6 +115,22 @@ public class CalcSceneController implements Initializable {
 		this.calc.setSumLabel(this.sumLabel);
 		this.calc.setTimeInputDefaultPrompt("Example:%n2w 3d 1h 28m%n3w 2d");
 		this.calc.setDeleteButton("Remove");
+		this.sumRadioGroup = new ToggleGroup();
+		this.daysRadio.setToggleGroup(this.sumRadioGroup);
+		this.weeksRadio.setToggleGroup(this.sumRadioGroup);
+		this.hoursRadio.setToggleGroup(this.sumRadioGroup);
+		this.calc.setWeeksRadio(this.weeksRadio);
+		this.calc.setDaysRadio(this.daysRadio);
+		this.calc.setHoursRadio(this.hoursRadio);
+	}
+
+	/**
+	 * Sum radion action listener
+	 * @param event Reference of Event
+	 */
+	@FXML
+	private void onSumRadioAction(final ActionEvent event) {
+		this.calc.handleSumRadioAction(event);
 	}
 
 	/**

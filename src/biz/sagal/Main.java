@@ -16,7 +16,7 @@ public class Main extends Application {
 	public void start(final Stage stage) {
 		try {
 			final BorderPane root = (BorderPane)FXMLLoader.load(this.getClass().getResource("CalcScene.fxml"));
-			final Scene scene = new Scene(root, 380, 380);
+			final Scene scene = new Scene(root, 380, 420);
 			scene.getStylesheets().add(this.getClass().getResource("application.css").toExternalForm());
 			stage.setScene(scene);
 			stage.setTitle("Time Span Calculator");

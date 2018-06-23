@@ -10,6 +10,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -67,6 +68,36 @@ public class Calculator {
 	 * Reference of Label#sumLabel
 	 */
 	private Label sumLabel;
+
+	/**
+	 * Reference of RadioButton#weeksRadio
+	 */
+	private RadioButton weeksRadio;
+
+	/**
+	 * Reference of RadioButton#daysRadio
+	 */
+	private RadioButton daysRadio;
+
+	/**
+	 * Reference of RadioButton#hoursRadio
+	 */
+	private RadioButton hoursRadio;
+
+	/**
+	 * Reference of sumByDays
+	 */
+	private int[] sumByDays;
+
+	/**
+	 * Reference of sumByHours
+	 */
+	private int[] sumByHours;
+
+	/**
+	 * Reference of sumByWeeks
+	 */
+	private int[] sumByWeeks;
 
 	/**
 	 * Weeks int[] index
@@ -161,6 +192,47 @@ public class Calculator {
 	 */
 	public void setSumLabel(final Label sumLabel) {
 		this.sumLabel = sumLabel;
+	}
+
+	/**
+	 * Weeks radio setter
+	 * @param weeksRadio Reference of RadioButton#weeksRadio
+	 */
+	public void setWeeksRadio(final RadioButton weeksRadio) {
+		this.weeksRadio = weeksRadio;
+	}
+
+	/**
+	 * Days radio setter
+	 * @param daysRadio Reference of RadioButton#daysRadio
+	 */
+	public void setDaysRadio(final RadioButton daysRadio) {
+		this.daysRadio = daysRadio;
+	}
+
+	/**
+	 * Hours radio setter
+	 * @param hoursRadio Reference of RadioButton#hoursRadio
+	 */
+	public void setHoursRadio(final RadioButton hoursRadio) {
+		this.hoursRadio = hoursRadio;
+	}
+
+	/**
+	 * Sum radio action handler
+	 * @param event Reference of Event
+	 */
+	public void handleSumRadioAction(final ActionEvent event) {
+		if (event.getSource().equals(this.hoursRadio)) {
+			this.selectSumRadio(HOURS);
+			this.showSummary(this.parseSummary(this.sumByHours));
+		} else if (event.getSource().equals(this.daysRadio)) {
+			this.selectSumRadio(DAYS);
+			this.showSummary(this.parseSummary(this.sumByDays));
+		} else {
+			this.selectSumRadio(WEEKS);
+			this.showSummary(this.parseSummary(this.sumByWeeks));
+		}
 	}
 
 	/**
@@ -327,12 +399,11 @@ public class Calculator {
 		final int maxHours = Integer.parseInt(this.maxHoursInput.getText());
 		final TimeMutation mutate = new TimeMutation(weeks, days, hours, minutes);
 		mutate.setMargin(maxDays, maxHours);
-		final int[] mutatedTimeSpan = mutate.getMutatedTime();
-		final int[] sumByDays = this.getSumByDays(mutatedTimeSpan, maxDays);
-		final int[] sumByHours = this.getSumByHours(mutatedTimeSpan, maxDays, maxHours);
-		System.out.println(this.parseSummary(sumByDays));
-		System.out.println(this.parseSummary(sumByHours));
-		this.showSummary(this.parseSummary(mutatedTimeSpan));
+		this.sumByWeeks = mutate.getMutatedTime();
+		this.sumByDays = this.getSumByDays(this.sumByWeeks, maxDays);
+		this.sumByHours = this.getSumByHours(this.sumByWeeks, maxDays, maxHours);
+		this.selectSumRadio(WEEKS);
+		this.showSummary(this.parseSummary(this.sumByWeeks));
 	}
 
 	/**
@@ -432,6 +503,42 @@ public class Calculator {
 		this.sumField.setVisible(false);
 		this.sumLabel.setVisible(false);
 		this.sumField.clear();
+		this.clearSumRadios();
+	}
+
+	/**
+	 * Shows sum radios
+	 */
+	private void showSumRadios() {
+		this.weeksRadio.setVisible(true);
+		this.daysRadio.setVisible(true);
+		this.hoursRadio.setVisible(true);
+	}
+
+	/**
+	 * Clears sum radio
+	 */
+	private void clearSumRadios() {
+		this.weeksRadio.setVisible(false);
+		this.daysRadio.setVisible(false);
+		this.hoursRadio.setVisible(false);
+		this.weeksRadio.setSelected(false);
+		this.daysRadio.setSelected(false);
+		this.hoursRadio.setSelected(false);
+	}
+
+	/**
+	 * Selects sum radio
+	 * @param sumRadio 0=WEEKS, 1=DAYS, 2=HOURS
+	 */
+	private void selectSumRadio(final int sumRadio) {
+		if (sumRadio == HOURS) {
+			this.hoursRadio.setSelected(true);
+		} else if (sumRadio == DAYS) {
+			this.daysRadio.setSelected(true);
+		} else {
+			this.weeksRadio.setSelected(true);
+		}
 	}
 
 	/**
@@ -442,5 +549,6 @@ public class Calculator {
 		this.sumField.setText(summary);
 		this.sumField.setVisible(true);
 		this.sumLabel.setVisible(true);
+		this.showSumRadios();
 	}
 }
