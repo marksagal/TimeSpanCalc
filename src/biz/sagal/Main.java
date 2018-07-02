@@ -2,6 +2,7 @@ package biz.sagal;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
@@ -16,11 +17,12 @@ public class Main extends Application {
 	public void start(final Stage stage) {
 		try {
 			final BorderPane root = (BorderPane)FXMLLoader.load(this.getClass().getResource("CalcScene.fxml"));
-			final Scene scene = new Scene(root, 380, 420);
+			final Scene scene = new Scene(root, 380, 450);
 			scene.getStylesheets().add(this.getClass().getResource("application.css").toExternalForm());
 			stage.setScene(scene);
 			stage.setTitle("Time Span Calculator");
 			stage.getIcons().add(new Image(this.getClass().getResourceAsStream("resources/images/calc.png")));
+			stage.initStyle(StageStyle.UNDECORATED);
 			stage.setResizable(false);
 			stage.show();
 		} catch (final Exception e) {

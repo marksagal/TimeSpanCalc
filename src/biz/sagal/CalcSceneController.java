@@ -13,8 +13,11 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.Tooltip;
+import javafx.scene.input.MouseEvent;
 import biz.sagal.calc.Calculator;
 import biz.sagal.calc.TimeModelInterface;
+import biz.sagal.calc.Titlebar;
 
 /**
  * Calculator Controller
@@ -89,6 +92,18 @@ public class CalcSceneController implements Initializable {
 	private RadioButton hoursRadio;
 
 	/**
+	 * Reference of Label#pinBtn
+	 */
+	@FXML
+	private Label pinBtn;
+
+	/**
+	 * Reference of Tooltip#pinTooltip
+	 */
+	@FXML
+	private Tooltip pinTooltip;
+
+	/**
 	 * Reference of ToggleGroup<SumRadio>
 	 */
 	private ToggleGroup sumRadioGroup;
@@ -97,6 +112,11 @@ public class CalcSceneController implements Initializable {
 	 * Reference of Calculator
 	 */
 	private Calculator calc;
+
+	/**
+	 * Reference of Titlebar
+	 */
+	private Titlebar titlebar;
 
 	/**
 	 * Initializes controller
@@ -122,6 +142,9 @@ public class CalcSceneController implements Initializable {
 		this.calc.setWeeksRadio(this.weeksRadio);
 		this.calc.setDaysRadio(this.daysRadio);
 		this.calc.setHoursRadio(this.hoursRadio);
+		this.titlebar = new Titlebar();
+		this.titlebar.setPinTooltip(pinTooltip);
+		this.titlebar.setPinBtn(pinBtn);
 	}
 
 	/**
@@ -158,5 +181,50 @@ public class CalcSceneController implements Initializable {
 	@FXML
 	private void onClearBtnAction(final ActionEvent event) {
 		this.calc.handleClearBtnAction(event);
+	}
+
+	/**
+	 * Titlebar mouse pressed event listener
+	 * @param event
+	 */
+	@FXML
+	private void onTitlebarPressed(final MouseEvent event) {
+		this.titlebar.handleTitlebarPressed(event);
+	}
+
+	/**
+	 * Titlebar mouse dragged event listener
+	 * @param event Reference of MouseEvent
+	 */
+	@FXML
+	private void onTitlebarDragged(final MouseEvent event) {
+		this.titlebar.handleTitlebarDragged(event);
+	}
+
+	/**
+	 * Titlebar close button clicked event listener
+	 * @param event Reference of MouseEvent
+	 */
+	@FXML
+	private void onCloseBtnClicked(final MouseEvent event) {
+		this.titlebar.handleCloseBtnClicked(event);
+	}
+
+	/**
+	 * Titlebar minimize button clicked event listener
+	 * @param event Reference of MouseEvent
+	 */
+	@FXML
+	private void onMinBtnClicked(final MouseEvent event) {
+		this.titlebar.handleMinBtnClicked(event);
+	}
+
+	/**
+	 * Titlebar pin button clicked event listener
+	 * @param event Reference of MouseEvent
+	 */
+	@FXML
+	private void onPinBtnClicked(final MouseEvent event) {
+		this.titlebar.handlePinBtnClicked(event);
 	}
 }
